@@ -2,7 +2,8 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const Dotenv = require('dotenv-webpack')
+const Dotenv = require('dotenv-webpack');
+const { truncateSync } = require('fs');
 
 module.exports = {
     entry: './src/index.js',
@@ -12,7 +13,6 @@ module.exports = {
         assetModuleFilename: 'assets/[hash][ext][query]'
     },
     mode: 'development',
-    watch: true,
     resolve: {
         extensions: ['.js'],
         alias: {
@@ -71,4 +71,11 @@ module.exports = {
         }),
         new Dotenv(),
     ],
+    devServer: {
+        static : path.join(__dirname, 'dist'),
+        compress: true,
+        historyApiFallback: true,
+        port: 3005,
+        open: true
+    },
 }
